@@ -1,0 +1,37 @@
+micronaut:
+  server:
+    port: 8060
+  security:
+    enabled: true
+    oauth2:
+      issuer: http://localhost:5000
+    token:
+      jwt:
+        enabled: true
+
+eureka:
+  client:
+    registration:
+      enabled: true
+    defaultZone: eureka:secret@localhost:10010/eureka/
+
+flyway:
+  datasources:
+    default:
+      locations: classpath:db
+
+kafka:
+  bootstrap:
+    servers: localhost:9092
+  consumers:
+    default:
+      key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      schema.registry.url: http://localhost:8081
+      specific.avro.reader: true
+
+datasources:
+  default:
+    url: jdbc:mysql://localhost:3308/likes?user=mysql&password=secret&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+    dialect: MYSQL

@@ -1,0 +1,11 @@
+micronaut:
+  application:
+    name: like-service
+  config-client:
+    enabled: true
+
+spring:
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:10000/like-service/local

@@ -11,6 +11,6 @@ spring:
 
 logging:
   level:
-    root: INFO
+    root: debug
 
 #Check if config server works as expected by opening: http://localhost:10000/resize-service/default

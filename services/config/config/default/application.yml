@@ -6,3 +6,7 @@ spring:
 logging:
   level:
     ROOT: info
+    org:
+      springframework:
+        cloud:
+          gateway: trace

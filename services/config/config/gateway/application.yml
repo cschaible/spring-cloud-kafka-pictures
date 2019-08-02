@@ -25,6 +25,10 @@ spring:
         uri: lb://comment-service
         predicates:
         - Path=/images/{id}/comments
+      - id: likes
+        uri: lb://like-service
+        predicates:
+        - Path=/images/{id}/likes
       - id: storage
         uri: lb://storage-service
         predicates:
