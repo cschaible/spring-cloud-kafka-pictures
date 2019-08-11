@@ -5,6 +5,7 @@ import { CommentResource } from '../../resources/comment/CommentResource';
 import { CommentsState, FindCommentAction, ImageComment, AddCommentAction } from '../../states/comment.state';
 import { Observable, of } from 'rxjs';
 import { PictureService } from '../../services/picture.service';
+import {LikePictureAction} from "../../states/picture-likes.state";
 
 @Component({
   selector: 'app-picture-card',
@@ -26,12 +27,21 @@ export class PictureCardComponent implements OnInit {
 
   protected commentsCollapsed = true;
 
+  protected likes: number = 0;
+
   @ViewChild('newComment', { read: ElementRef, static: false }) 
   private newComment: ElementRef;
 
   constructor(private store: Store, private pictureService: PictureService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.store
+      .select(state => state.pictureLikes)
+      .subscribe(pictureLikes => {
+        let likes = pictureLikes.likes.find(item => item.imageIdentifier === this.picture.identifier).likes;
+        this.likes = likes == undefined ? 0 : likes
+      });
+  }
 
   getPaddingTop(): string {
     if (!this.showHeader) {
@@ -109,5 +119,9 @@ export class PictureCardComponent implements OnInit {
       fileName = this.picture.title.replace(' ', '_').toLowerCase() + '.jpg'
     }
     this.pictureService.downloadImage(this.picture._links.imageRaw.href, fileName);
+  }
+
+  likeImage() {
+    this.store.dispatch(new LikePictureAction(this.picture.identifier));
   }
 }

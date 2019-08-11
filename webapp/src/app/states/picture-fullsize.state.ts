@@ -1,12 +1,13 @@
-import { Action, StateContext, State, Selector } from "@ngxs/store";
-import { PicturePageResource } from "../resources/picture/PicturePageResource";
-import { PictureSearchService } from "../services/picture-search.service";
-import { PictureResource } from "../resources/picture/PictureResource";
-import { UpdatePictureTitleAction } from "./update-picture-title-action";
+import {Action, Selector, State, StateContext} from "@ngxs/store";
+import {PictureSearchService} from "../services/picture-search.service";
+import {PictureResource} from "../resources/picture/PictureResource";
+import {UpdatePictureTitleAction} from "./update-picture-title-action";
 
 export class FindPictureAction {
   static readonly type = 'FindPicture';
-  constructor(public identifier: string) { }
+
+  constructor(public identifier: string) {
+  }
 }
 
 @State<PictureResource>({
@@ -14,7 +15,8 @@ export class FindPictureAction {
 })
 export class PictureFullsizeState {
 
-  constructor(private pictureSearchService: PictureSearchService) { }
+  constructor(private pictureSearchService: PictureSearchService) {
+  }
 
 
   @Action(FindPictureAction)

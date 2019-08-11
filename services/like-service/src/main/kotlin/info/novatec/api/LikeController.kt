@@ -16,16 +16,16 @@ class LikeController(
 
     @Post("/{imageIdentifier}/likes")
     fun likeImage(imageIdentifier: UUID): HttpResponse<LikesResource> {
-        return HttpResponse.ok(LikesResource(image = imageIdentifier, likes = likesService.likeImage(imageIdentifier)))
+        return HttpResponse.ok(LikesResource(imageIdentifier = imageIdentifier, likes = likesService.likeImage(imageIdentifier)))
     }
 
     @Get("/{imageIdentifier}/likes")
     fun findLikes(imageIdentifier: UUID): HttpResponse<LikesResource> {
-        return HttpResponse.ok(LikesResource(image = imageIdentifier, likes = likesService.findLikes(imageIdentifier)))
+        return HttpResponse.ok(LikesResource(imageIdentifier = imageIdentifier, likes = likesService.findLikes(imageIdentifier)))
     }
 }
 
 data class LikesResource(
-        val image: UUID,
+        val imageIdentifier: UUID,
         val likes: Long
 )
