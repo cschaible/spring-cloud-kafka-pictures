@@ -8,4 +8,4 @@ spring:
   cloud:
     config:
       enabled: true
-      uri: http://localhost:10000/like-service/local
+      uri: http://config:secret@localhost:10000/like-service/local
