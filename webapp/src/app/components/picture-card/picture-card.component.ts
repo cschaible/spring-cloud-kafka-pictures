@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { PictureResource } from '../../resources/picture/PictureResource';
-import { Store, Select } from '@ngxs/store';
-import { CommentResource } from '../../resources/comment/CommentResource';
-import { CommentsState, FindCommentAction, ImageComment, AddCommentAction } from '../../states/comment.state';
-import { Observable, of } from 'rxjs';
-import { PictureService } from '../../services/picture.service';
+import {ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {PictureResource} from '../../resources/picture/PictureResource';
+import {Store} from '@ngxs/store';
+import {AddCommentAction, CommentsState, FindCommentAction, ImageComment} from '../../states/comment.state';
+import {Observable, of} from 'rxjs';
+import {PictureService} from '../../services/picture.service';
 import {LikePictureAction} from "../../states/picture-likes.state";
 
 @Component({
@@ -29,21 +28,26 @@ export class PictureCardComponent implements OnInit {
 
   protected likes: number = 0;
 
-  @ViewChild('newComment', { read: ElementRef, static: false }) 
+  protected hasLiked: boolean = false;
+
+  @ViewChild('newComment', {read: ElementRef, static: false})
   private newComment: ElementRef;
 
-  constructor(private store: Store, private pictureService: PictureService) { }
+  constructor(private store: Store,
+              private pictureService: PictureService) {
+  }
 
   ngOnInit() {
     this.store
       .select(state => state.pictureLikes)
       .subscribe(pictureLikes => {
-        if(pictureLikes == undefined || pictureLikes.likes == undefined) {
+        if (pictureLikes == undefined || pictureLikes.likes == undefined) {
           return;
         }
         let foundLikes = pictureLikes.likes.find(item => item.imageIdentifier === this.picture.identifier);
         let likes = foundLikes == undefined ? undefined : foundLikes.likes;
         this.likes = likes == undefined ? 0 : likes
+        this.hasLiked = foundLikes.hasLiked
       });
   }
 

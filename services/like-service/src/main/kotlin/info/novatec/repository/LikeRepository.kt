@@ -11,7 +11,8 @@ import java.util.*
 @JdbcRepository(dialect = Dialect.MYSQL)
 interface LikeRepository : CrudRepository<Like, LikeId> {
 
+    // TODO: This is a workaround for now since I could not get the count query running with embedded classes
     @Query(value = "select * from likes where like_id_image_identifier like :imageIdentifier")
-    fun countByImageIdentifier(imageIdentifier: UUID): List<Like>
+    fun findByImageIdentifier(imageIdentifier: UUID): List<Like>
 
 }

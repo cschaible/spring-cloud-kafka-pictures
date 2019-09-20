@@ -14,7 +14,9 @@
     <div class="picture-card-reaction">
       <span class="picture-card-reaction-padding" octicon="comment-discussion" color="dark"></span>
       <a class="picture-card-reaction-text" href="javascript:void(0)" (click)="toggleComments()">{{commentLinkDescription()}}</a>
-      <span class="picture-card-reaction-thumbup" octicon="thumbsup" (click)="likeImage()"></span>
+      <!-- Just changing the color of the octicon was not working. The changes were not picked up properly -->
+      <span *ngIf="!hasLiked" class="picture-card-reaction-thumbup" octicon="thumbsup" color="black" (click)="likeImage()"></span>
+      <span *ngIf="hasLiked" class="picture-card-reaction-thumbup" octicon="thumbsup" color="green" (click)="likeImage()"></span>
       <span class="picture-card-reaction-likes">{{likes}}</span>
     </div>
     <div class="picture-card-reaction-comments-container" [ngbCollapse]="commentsCollapsed">

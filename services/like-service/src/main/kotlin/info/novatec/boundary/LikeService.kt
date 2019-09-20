@@ -19,12 +19,17 @@ open class LikeService(
         if (!like.isPresent) {
             likeRepository.save(Like(LikeId(imageIdentifier, userIdentifier), Instant.now()))
         }
-        return likeRepository.countByImageIdentifier(imageIdentifier).size.toLong()
+        return likeRepository.findByImageIdentifier(imageIdentifier).size.toLong()
     }
 
     @Transactional(readOnly = true)
     open fun findLikes(imageIdentifier: UUID): Long {
-        return likeRepository.countByImageIdentifier(imageIdentifier).size.toLong()
+        return likeRepository.findByImageIdentifier(imageIdentifier).size.toLong()
+    }
+
+    @Transactional(readOnly = true)
+    open fun hasLiked(imageIdentifier: UUID, userIdentifier: UUID): Boolean {
+        return likeRepository.findById(LikeId(imageIdentifier, userIdentifier)).isPresent
     }
 
 }

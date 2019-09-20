@@ -40,7 +40,6 @@ export class PictureLikesState {
       ctx.patchState({
         likes: [...model.likes.filter(like => like.imageIdentifier != response.imageIdentifier), response]
       });
-      console.log("find likes", ctx.getState());
     });
   }
 
