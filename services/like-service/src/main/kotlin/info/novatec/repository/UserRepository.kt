@@ -10,4 +10,5 @@ import java.util.*
 @JdbcRepository(dialect = Dialect.MYSQL)
 interface UserRepository : CrudRepository<User, UUID> {
     fun update(@Id id: UUID, name: String)
+    fun findByIdpId(idpId: String): User?
 }
