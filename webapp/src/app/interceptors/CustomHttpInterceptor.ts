@@ -1,7 +1,7 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from "@angular/common/http";
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { OAuthService } from "angular-oauth2-oidc";
-import { Observable, throwError, of } from "rxjs";
+import { Observable, of } from "rxjs";
 
 import { environment } from "../../environments/environment";
 import { catchError } from "rxjs/operators";
