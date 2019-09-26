@@ -22,6 +22,12 @@ open class LikeService(
         return likeRepository.findByImageIdentifier(imageIdentifier).size.toLong()
     }
 
+    @Transactional
+    open fun dislikeImage(imageIdentifier: UUID, userIdentifier: UUID): Long {
+        likeRepository.deleteById(LikeId(imageIdentifier, userIdentifier))
+        return likeRepository.findByImageIdentifier(imageIdentifier).size.toLong()
+    }
+
     @Transactional(readOnly = true)
     open fun findLikes(imageIdentifier: UUID): Long {
         return likeRepository.findByImageIdentifier(imageIdentifier).size.toLong()
