@@ -21,7 +21,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:micronaut-bom:1.2.1'
+        mavenBom 'io.micronaut:micronaut-bom:1.2.2'
     }
 }
 
@@ -37,7 +37,7 @@ dependencies {
 
     implementation "io.micronaut.configuration:micronaut-flyway"
     implementation "io.micronaut.configuration:micronaut-kafka"
-    implementation 'io.micronaut.configuration:micronaut-oauth2:1.0.0.BUILD-SNAPSHOT'
+    implementation "io.micronaut.configuration:micronaut-security-oauth2:$micronautOAuth2Version"
     implementation "io.micronaut.data:micronaut-data-jdbc:$micronautDataVersion"
     implementation "io.micronaut:micronaut-http-client"
     implementation "io.micronaut:micronaut-http-server-netty"
