@@ -45,9 +45,9 @@ export class PictureLikesState {
 
   @Action(LikePictureAction)
   likesPicture(ctx: StateContext<LikesState>, action: LikePictureAction) {
-    let model = ctx.getState();
     this.likesService.likeImages(action.identifier).subscribe(response => {
-        ctx.patchState({
+      let model = ctx.getState();
+      ctx.patchState({
           likes: [...model.likes.filter(like => like.imageIdentifier != response.imageIdentifier), response]
         });
       }
