@@ -36,19 +36,15 @@ public class ImageMessagingController {
     SpecificRecordBase value = event.value();
     if (value instanceof ImageUploadedEventAvro) {
       imageService.create(imageAssembler.assemble((ImageUploadedEventAvro) value));
-      ack.acknowledge();
     } else if (value instanceof ImageExifDataExtractedEventAvro) {
       imageService.updateExifData(imageAssembler.assemble((ImageExifDataExtractedEventAvro) value));
-      ack.acknowledge();
     } else if (value instanceof ImageInvalidEventAvro) {
       imageService.deleteImage(UUID.fromString(((ImageInvalidEventAvro) value).getIdentifier()));
-      ack.acknowledge();
     } else if (value instanceof ImageDeletedEventAvro) {
       imageService.deleteImage(UUID.fromString(((ImageDeletedEventAvro) value).getIdentifier()));
-      ack.acknowledge();
     } else {
       log.debug("Skip message of type: " + event.getClass());
-      ack.acknowledge();
     }
+    ack.acknowledge();
   }
 }
