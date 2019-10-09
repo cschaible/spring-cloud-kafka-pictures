@@ -3,10 +3,10 @@ package info.novatec.boundary
 import info.novatec.model.Like
 import info.novatec.model.LikeId
 import info.novatec.repository.LikeRepository
-import io.micronaut.spring.tx.annotation.Transactional
 import java.time.Instant
 import java.util.*
 import javax.inject.Singleton
+import javax.transaction.Transactional
 
 @Singleton
 open class LikeService(
@@ -19,21 +19,21 @@ open class LikeService(
         if (!like.isPresent) {
             likeRepository.save(Like(LikeId(imageIdentifier, userIdentifier), Instant.now()))
         }
-        return likeRepository.findByImageIdentifier(imageIdentifier).size.toLong()
+        return likeRepository.countByLikeIdImageIdentifier(imageIdentifier)
     }
 
     @Transactional
     open fun dislikeImage(imageIdentifier: UUID, userIdentifier: UUID): Long {
         likeRepository.deleteById(LikeId(imageIdentifier, userIdentifier))
-        return likeRepository.findByImageIdentifier(imageIdentifier).size.toLong()
+        return likeRepository.countByLikeIdImageIdentifier(imageIdentifier)
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     open fun findLikes(imageIdentifier: UUID): Long {
-        return likeRepository.findByImageIdentifier(imageIdentifier).size.toLong()
+        return likeRepository.countByLikeIdImageIdentifier(imageIdentifier)
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     open fun hasLiked(imageIdentifier: UUID, userIdentifier: UUID): Boolean {
         return likeRepository.findById(LikeId(imageIdentifier, userIdentifier)).isPresent
     }
