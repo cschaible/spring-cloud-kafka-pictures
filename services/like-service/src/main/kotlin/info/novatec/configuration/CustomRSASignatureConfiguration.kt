@@ -5,10 +5,12 @@ import java.security.KeyFactory
 import java.security.interfaces.RSAPublicKey
 import java.security.spec.X509EncodedKeySpec
 import java.util.*
+import javax.inject.Named
 
+@Named("customRSASignaturConfiguration")
 class CustomRSASignatureConfiguration : RSASignatureConfiguration {
 
-    val key = """-----BEGIN PUBLIC KEY-----
+    private val key = """-----BEGIN PUBLIC KEY-----
     MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuQTabXCRBG62Pm12E+1y
     deRzDz3szcO1g2EZYSjYHAadMHPNAmEPohWM9OzEHMybJQtRuXUCfHKmgshN+e49
     4dk3atcNkiFG0eueZQdkTXA4kzVX6cFF3T1Vnvlvqk8wu5alfvDQV+spuZt2/KfW
