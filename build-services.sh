@@ -29,6 +29,5 @@ build "services/user-service"
 progress "BUILD COMMENT SERVICE"
 build "services/comment-service"
 
-progess "BUILD LIKE SERVICE"
+progress "BUILD LIKE SERVICE"
 build "services/like-service"
-

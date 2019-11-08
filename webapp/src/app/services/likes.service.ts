@@ -1,8 +1,8 @@
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {environment} from "../../environments/environment";
-import {LikesResource} from "../resources/likes/LikesResource";
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "../../environments/environment";
+import { LikesResource } from "../resources/likes/LikesResource";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,10 @@ export class LikesService {
 
   public likeImages(imageId: string): Observable<LikesResource> {
     return this.httpClient.post<LikesResource>(environment.api + `/images/${imageId}/likes`, {});
+  }
+
+  public dislikeImages(imageId: string): Observable<LikesResource> {
+    return this.httpClient.delete<LikesResource>(environment.api + `/images/${imageId}/likes`, {});
   }
 
   public getLikesForImage(imageId: string): Observable<LikesResource> {

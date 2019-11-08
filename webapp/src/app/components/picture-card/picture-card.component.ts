@@ -1,10 +1,11 @@
-import {ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {PictureResource} from '../../resources/picture/PictureResource';
-import {Store} from '@ngxs/store';
-import {AddCommentAction, CommentsState, FindCommentAction, ImageComment} from '../../states/comment.state';
-import {Observable, of} from 'rxjs';
-import {PictureService} from '../../services/picture.service';
-import {LikePictureAction} from "../../states/picture-likes.state";
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { PictureResource } from '../../resources/picture/PictureResource';
+import { Store } from '@ngxs/store';
+import { AddCommentAction, CommentsState, FindCommentAction, ImageComment } from '../../states/comment.state';
+import { Observable, of } from 'rxjs';
+import { PictureService } from '../../services/picture.service';
+import { LikePictureAction, DislikePictureAction } from "../../states/picture-likes.state";
+import { AuthenticationModel } from 'src/app/states/authentication.state';
 
 @Component({
   selector: 'app-picture-card',
@@ -30,11 +31,16 @@ export class PictureCardComponent implements OnInit {
 
   protected hasLiked: boolean = false;
 
-  @ViewChild('newComment', {read: ElementRef, static: false})
+  protected hasDisliked: boolean = false;
+
+  protected loggedIn: boolean;
+
+  @ViewChild('newComment', { read: ElementRef, static: false })
   private newComment: ElementRef;
 
   constructor(private store: Store,
-              private pictureService: PictureService) {
+    private pictureService: PictureService) {
+    store.select(state => state.authentication).subscribe(auth => this.loggedIn = (auth as AuthenticationModel).loggedIn);
   }
 
   ngOnInit() {
@@ -46,8 +52,9 @@ export class PictureCardComponent implements OnInit {
         }
         let foundLikes = pictureLikes.likes.find(item => item.imageIdentifier === this.picture.identifier);
         let likes = foundLikes == undefined ? undefined : foundLikes.likes;
-        this.likes = likes == undefined ? 0 : likes
-        this.hasLiked = foundLikes.hasLiked
+        this.likes = likes == undefined ? 0 : likes;
+        this.hasLiked = this.loggedIn && foundLikes._links.dislike != undefined;
+        this.hasDisliked = this.loggedIn && foundLikes._links.like != undefined;
       });
   }
 
@@ -131,5 +138,9 @@ export class PictureCardComponent implements OnInit {
 
   likeImage() {
     this.store.dispatch(new LikePictureAction(this.picture.identifier));
+  }
+
+  dislikeImage() {
+    this.store.dispatch(new DislikePictureAction(this.picture.identifier));
   }
 }
